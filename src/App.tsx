@@ -8,10 +8,12 @@ import SupportGithub from "./components/SupoortGithub";
 
 import WalletBar from "./components/WalletConnect";
 import RouterLogProvider from "./context/RouterContext";
-import './style/daisyui-cover.css'; // 导入自定义的 DaisyUI 覆盖样式
+import "./style/daisyui-cover.css"; // 导入自定义的 DaisyUI 覆盖样式
 import Home from "./pages/Home";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
+import Account from "./pages/Account/Index";
+import CreateAccount from "./pages/Account/Create";
 
 function App() {
   return (
@@ -35,7 +37,8 @@ function App() {
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/accounts" element={<Home />} />
+              <Route path="/accounts" element={<Account />} />
+              <Route path="/account/create" element={<CreateAccount />} />
               {/* 其他路由 */}
             </Routes>
           </div>
