@@ -2,6 +2,7 @@ import { Logo } from "../components/Logo";
 import { Navbar } from "../components/Navbar";
 import { Section } from "../components/Section";
 import SupportGithub from "../components/SupoortGithub";
+import noteIcon from "/assets/icons/note.svg";
 
 import WalletBar from "../components/WalletConnect";
 
@@ -21,7 +22,11 @@ const Header = () => {
         </div>
         {/* 右边按钮 */}
         <div className="flex items-center space-x-4">
-          <SupportGithub />
+          <img
+            className="w-5 mr-2 h-5"
+            src={noteIcon}
+            alt="logo"
+          ></img>
           <WalletBar className="rounded-full" />
         </div>
       </div>

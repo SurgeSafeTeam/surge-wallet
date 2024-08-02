@@ -42,12 +42,12 @@ export default function () {
           collective asset management platform.
         </p>
         <p className="mb-4 text-2xl font-normal text-white">Get Start</p>
-        <p className="text-xs font-normal text-white/60 mb-6">
+        <p className="mb-6 text-xs font-normal text-white/60">
           Connect your wallet to create a new Safe Account or open an existing
           one
         </p>
         <div className="flex items-center space-x-4">
-          <button className="rounded-full bg-black text-white border border-white px-4 py-2">
+          <button className="rounded-full border border-white bg-black px-4 py-2 text-white">
             Watch any account
           </button>
           <WalletBar className="rounded-full" />

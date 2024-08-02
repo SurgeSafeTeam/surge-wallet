@@ -22,6 +22,9 @@ const config = {
       "6xl": "4rem",
     },
     extend: {
+      fontFamily: {
+        sans: ['HarmonyOS Sans', 'sans-serif'], 
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

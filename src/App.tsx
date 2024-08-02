@@ -8,7 +8,7 @@ import SupportGithub from "./components/SupoortGithub";
 
 import WalletBar from "./components/WalletConnect";
 import RouterLogProvider from "./context/RouterContext";
-
+import './style/daisyui-cover.css'; // 导入自定义的 DaisyUI 覆盖样式
 import Home from "./pages/Home";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
