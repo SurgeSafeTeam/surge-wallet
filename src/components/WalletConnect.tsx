@@ -7,6 +7,7 @@ import {
 } from "@roochnetwork/rooch-sdk-kit";
 import { useMemo, useState } from "react";
 import { installWallet } from "../utils";
+import "../style/daisyui-cover.css"; // 导入自定义的 DaisyUI 覆盖样式
 import okxIcon from "/assets/icons/okx.png";
 import logo from "/assets/icons/logo.svg";
 import completeIcon from "/assets/icons/complete.svg";
@@ -82,8 +83,7 @@ function ConnectWallet({ className }: Props) {
       console.error("Connection failed", error);
       setStep(0); // 设置步骤为 0，表示连接失败
     }
-
-  }
+  };
   return (
     <div>
       <button
@@ -160,8 +160,8 @@ function ConnectWallet({ className }: Props) {
               <button
                 key="unisat"
                 onClick={handleConnect}
-                className={`btn h-20 w-56 ${step === 2 ? 'border-[#12ff80]' : 'border-white/5'
-                  } rounded-2xl border hover:bg-[#12ff80] mb-5`}
+                className={`btn h-20 w-56 ${step === 2 ? "border-[#12ff80]" : "border-white/5"
+                  } mb-5 rounded-2xl border hover:bg-[#12ff80]`}
               >
                 {step === 0 && (
                   <div className="flex h-3/4 w-full items-center">

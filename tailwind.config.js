@@ -55,7 +55,6 @@ const config = {
         },
         'electric-green': "#12FF80",
       },
-
       lineHeight: {
         hero: "4.5rem",
       },
