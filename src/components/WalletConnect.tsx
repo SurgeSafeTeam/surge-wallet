@@ -11,25 +11,24 @@ import { installWallet } from "../utils";
 import okxIcon from "/assets/icons/okx.png";
 import logo from "/assets/icons/logo.svg";
 import completeIcon from "/assets/icons/complete.svg";
-const stepStyle
-  = {
+const stepStyle = {
   step: {
-    height: '10px',
-    width: '10px',
-    border: '2px solid gray',
+    height: "10px",
+    width: "10px",
+    border: "2px solid gray",
     content: '""',
   },
   stepPrimary: {
-    borderColor: '#12ff80',
+    borderColor: "#12ff80",
   },
   stepBefore: {
-    width: '70%',
-    height: '0.1rem',
-    backgroundColor: 'gray',
-    transform: 'translateY(-50%)',
+    width: "70%",
+    height: "0.1rem",
+    backgroundColor: "gray",
+    transform: "translateY(-50%)",
   },
   stepPrimaryBefore: {
-    backgroundColor: '#12ff80',
+    backgroundColor: "#12ff80",
   },
 };
 
@@ -159,7 +158,7 @@ function ConnectWallet({ className }: Props) {
               </div>
               {/* 步骤条 */}
               <div className="-mx-6 justify-center">
-                <ul className={{ stepStyle } } >
+                <ul className={{ stepStyle }}>
                   {/* <li className="step step-primary"></li>
                   <li className="step step-primary"></li>
                   <li className="step"></li> */}
@@ -181,8 +180,9 @@ function ConnectWallet({ className }: Props) {
               <button
                 key="unisat"
                 onClick={handleConnect}
-                className={`btn h-20 w-56 ${step === 2 ? "border-[#12ff80]" : "border-white/5"
-                  } mb-5 rounded-2xl border hover:bg-[#12ff80]`}
+                className={`btn h-20 w-56 ${
+                  step === 2 ? "border-[#12ff80]" : "border-white/5"
+                } mb-5 rounded-2xl border hover:bg-[#12ff80]`}
               >
                 {step === 0 && (
                   <div className="flex h-3/4 w-full items-center">

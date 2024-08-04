@@ -16,10 +16,11 @@ import AddressBook from "./pages/AddressBook";
 import AppC from "./pages/App";
 import Assets from "./pages/Assets";
 import Swap from "./pages/Swap";
-import Accounts from "./pages/Accouts";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 import SidebarLayout from "./layout/SidebarLayout";
+import Account from "./pages/Account/Index";
+import CreateAccount from "./pages/Account/Create/Index";
 
 function App() {
   const { current } = useContext(RouterLogContext);
@@ -47,9 +48,8 @@ function App() {
                 path="/accounts"
                 element={
                   <SidebarLayout>
-                    {" "}
                     <Header />
-                    <Accounts />
+                    <Account />
                   </SidebarLayout>
                 }
               />
@@ -116,6 +116,7 @@ function App() {
                   </SidebarLayout>
                 }
               />
+              <Route path="/account/create" element={<CreateAccount />} />
               {/* 其他路由 */}
             </Routes>
           </div>

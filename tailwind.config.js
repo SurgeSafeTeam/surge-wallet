@@ -1,4 +1,4 @@
-import daisyui from "daisyui"
+import daisyui from "daisyui";
 
 const config = {
   content: [
@@ -23,7 +23,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ['HarmonyOS Sans', 'sans-serif'], 
+        sans: ["HarmonyOS Sans", "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -53,7 +53,7 @@ const config = {
           800: "#2d3748",
           900: "#1a202c",
         },
-        'electric-green': "#12FF80",
+        "electric-green": "#12FF80",
       },
       lineHeight: {
         hero: "4.5rem",
@@ -65,7 +65,7 @@ const config = {
     themes: [
       {
         backgroundImage: {
-          'custom-bg': "url('/assets/image/bgimage.svg')",
+          "custom-bg": "url('/assets/image/bgimage.svg')",
         },
         light: {
           // eslint-disable-next-line global-require
@@ -84,5 +84,5 @@ const config = {
       },
     ],
   },
-}
-export default config
+};
+export default config;

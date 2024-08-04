@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Section } from "../components/Section";
-import  "../style/transation-daisyui-cover.css";
+import "../style/transation-daisyui-cover.css";
 import WalletBar from "../components/WalletConnect";
 import Header from "../layout/Header";
 
 export default function () {
-
   const [step, setStep] = useState(0);
   const nextStep = () => setStep((prev) => prev + 1);
   const handleConnect = async (e) => {
@@ -26,12 +25,11 @@ export default function () {
   return (
     <>
       <Section>
-        <div className="flex w-[400px] h-56">
+        <div className="flex h-56 w-[400px]">
           {/* 左边的说明和进度条 */}
-          <div className="h-full  w-full  bg-[#101111] p-6 rounded-3xl">
-
+          <div className="h-full w-full rounded-3xl bg-[#101111] p-6">
             <div className="items-center">
-              <p className="text-white text-base">Transation Status</p>
+              <p className="text-base text-white">Transation Status</p>
             </div>
 
             {/* <div className="flex-grow">
@@ -56,8 +54,8 @@ export default function () {
             </div> */}
             {/* 步骤条 */}
 
-            <div className=" justify-center">
-              <ul  className=" steps w-full  steps-vertical">
+            <div className="justify-center">
+              <ul className="steps steps-vertical w-full">
                 <li className="step step-primary"></li>
                 <li className="step step-primary"></li>
                 <li className="step"></li>

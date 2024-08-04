@@ -7,19 +7,16 @@
 }
 .steps .step-primary:after {
   border-color: #12ff80; /* 激活时边框为荧光绿 */
-  
 }
 
 .steps .step:before {
-  background-color: gray !important; 
+  background-color: gray !important;
   width: 0.1rem !important;
   height: 60% !important;
-  left: 50%; 
+  left: 50%;
 
-@apply -translate-y-[80%] !important;
-
+  @apply -translate-y-[80%] !important;
 }
-
 
 .steps .step-primary + .step-primary:before {
   background-color: #12ff80 !important;

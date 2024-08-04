@@ -84,7 +84,9 @@ const Sidebar: React.FC = () => {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(currentAddress?.genRoochAddress().toStr() || "");
+      await navigator.clipboard.writeText(
+        currentAddress?.genRoochAddress().toStr() || "",
+      );
     } catch (error) {
       console.error("copy:", error);
     }
@@ -119,9 +121,11 @@ const Sidebar: React.FC = () => {
           {/* 用户头像 */}
           <img className="mr-2 h-14 w-14" src={userAvatar} alt="userAvatar" />
           {/* 叠加图标 */}
-          <div className="absolute bottom-0 right-0 flex items-center justify-center h-5 w-5 bg-electric-green border-none rounded-full ">
+          <div className="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-none bg-electric-green">
             {isMultisig ? (
-              <span className="text-[8px] font-bold text-black">{multisigInfo}</span>
+              <span className="text-[8px] font-bold text-black">
+                {multisigInfo}
+              </span>
             ) : (
               <img className="h-5 w-5" src={btcIcon} alt="BTC" />
             )}
@@ -198,7 +202,7 @@ const Sidebar: React.FC = () => {
       <ul className="menu-compact menu p-0">
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] `}
+            className={`rounded-none px-8 hover:bg-[#161717]`}
             onClick={() => handleNavigation("/user/home", 0)}
           >
             <div className={`inline-flex items-center`}>
@@ -236,7 +240,7 @@ const Sidebar: React.FC = () => {
         <li>
           <button
             onClick={() => handleNavigation("/user/addressBook", 3)}
-            className={`rounded-none px-8 hover:bg-[#161717] `}
+            className={`rounded-none px-8 hover:bg-[#161717]`}
           >
             <div className={`inline-flex items-center`}>
               <img className="mr-2 h-4 w-4" src={addressBookIcon} alt="logo" />
@@ -246,7 +250,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] `}
+            className={`rounded-none px-8 hover:bg-[#161717]`}
             onClick={() => handleNavigation("/user/swap", 4)}
           >
             <div className={`inline-flex items-center`}>
@@ -257,7 +261,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] `}
+            className={`rounded-none px-8 hover:bg-[#161717]`}
             onClick={() => handleNavigation("/user/app", 5)}
           >
             <div className={`inline-flex items-center`}>
@@ -268,7 +272,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] `}
+            className={`rounded-none px-8 hover:bg-[#161717]`}
             onClick={() => handleNavigation("/user/setting", 6)}
           >
             <div className={`inline-flex items-center`}>
