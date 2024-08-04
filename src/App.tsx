@@ -47,10 +47,12 @@ function App() {
               <Route
                 path="/accounts"
                 element={
-                  <SidebarLayout>
-                    <Header />
+                  <div>
+                    <Header haveSidebar={true} />
                     <Account />
-                  </SidebarLayout>
+                  </div>
+
+
                 }
               />
               <Route

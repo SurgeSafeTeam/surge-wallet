@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import WalletBar from "../components/WalletConnect";
 import noNotificationIcon from "/assets/icons/copy.svg";
 interface HeaderProps {
-  isHome?: boolean;
+  haveSidebar?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ isHome = false }) => {
+const Header: React.FC<HeaderProps> = ({ haveSidebar = false }) => {
   const notifications: string[] = [
     "Notification 1",
     "Notification 2",
@@ -21,8 +21,8 @@ const Header: React.FC<HeaderProps> = ({ isHome = false }) => {
     <header className="w-full bg-transparent py-4 text-white">
       <div className="container mx-auto flex max-w-[1200px] items-center justify-between px-4">
         {/* 左边Logo：仅在主页显示 */}
-        {isHome && (
-          <div className="flex items-center">
+        {haveSidebar && (
+          <div className="flex items-center" onClick={() => navigate("/accounts")}>
             <div className={`inline-flex items-center`}>
               <img
                 className="w-30 mr-2 h-10"
@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ isHome = false }) => {
         )}
         {/* 右边按钮 */}
         <div
-          className={`flex items-center space-x-4 ${isHome ? "" : "ml-auto"}`}
+          className={`flex items-center space-x-4 ${haveSidebar ? "" : "ml-auto"}`}
         >
           <details className="dropdown dropdown-left dropdown-bottom text-white">
             <summary className="btn m-1 flex items-center space-x-2 border-none">

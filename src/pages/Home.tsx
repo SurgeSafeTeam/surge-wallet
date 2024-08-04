@@ -5,7 +5,7 @@ import Header from "../layout/Header";
 export default function () {
   return (
     <>
-      <Header isHome={true} />
+      <Header haveSidebar={true} />
       <Section>
         <p className="mb-4 mt-10 text-5xl font-bold text-white">
           Unlock A New Way <br />
