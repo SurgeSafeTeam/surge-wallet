@@ -11,7 +11,7 @@ import WalletBar from './components/WalletConnect';
 import RouterLogProvider from './context/RouterContext';
 import './style/daisyui-cover.css';
 import Home from './pages/Home';
-import TransactionSection from './pages/TransactionsSection';
+import TransactionSection from './pages/transactions/TransactionsSection.tsx';
 import Setting from './pages/Setting';
 import UserHome from './pages/UserHome';
 import AddressBook from './pages/AddressBook';
@@ -22,6 +22,7 @@ import Accounts from './pages/Accouts';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import SidebarLayout from './layout/SidebarLayout';
+import SendToken from "./pages/transactions/SendToken.tsx";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
               <Route path="/user/home" element={<SidebarLayout><Header /><UserHome /></SidebarLayout>} />
               <Route path="/user/assets" element={<SidebarLayout><Header /><Assets /></SidebarLayout>} />
               <Route path="/user/transaction-section" element={<SidebarLayout><Header /><TransactionSection /></SidebarLayout>} />
+              <Route path="/user/transaction/send-token" element={<SidebarLayout><Header/><SendToken /></SidebarLayout>}/>
               <Route path="/user/addressBook" element={<SidebarLayout><Header /><AddressBook /></SidebarLayout>} />
               <Route path="/user/swap" element={<SidebarLayout><Header /><Swap /></SidebarLayout>} />
               <Route path="/user/app" element={<SidebarLayout><Header /><AppC /></SidebarLayout>} />
