@@ -1,6 +1,6 @@
 // src/layout/SidebarLayout.tsx
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import btcIcon from "/assets/icons/btc.svg";
@@ -20,6 +20,7 @@ import swapIcon from "/assets/icons/swap.svg";
 import appIcon from "/assets/icons/app.svg";
 import settingIcon from "/assets/icons/setting.png";
 import { RouterLogContext } from "../context/RouterContext";
+import { useCurrentAddress, useWalletStore } from "@roochnetwork/rooch-sdk-kit";
 // Sidebar 组件
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -27,12 +28,23 @@ const Sidebar: React.FC = () => {
   const [address, setAddress] = useState(
     "bc1p2uuyy5v6mqs8nwnmfjuempwzalymt709a279tk8x4xzw4hwhgcfqgr5n9k",
   );
-  const [shortAdd, setShortAdd] = useState("bc1p2...5n9k");
+
   const [balance, setBalance] = useState("0.12345678 BTC");
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const { current: currentRoute } = useContext(RouterLogContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMultisig, setIsMultisig] = useState(true);
+  const [multisigInfo, setMultisigInfo] = useState("2/3");
+
+  // const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  // const { current: currentRoute } = useContext(RouterLogContext);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const currentAddress = useCurrentAddress();
+
+  const shortenedAddress = useMemo(() => {
+    const address = currentAddress?.genRoochAddress().toStr();
+    if (!address) return "";
+    return `${address.slice(0, 10)}...${address.slice(-4)}`;
+  }, [currentAddress]);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openModal = () => {
@@ -63,26 +75,23 @@ const Sidebar: React.FC = () => {
       closeModal();
     }
   };
-  const shortenAddress = (address: string, length: number = 5): string => {
-    if (address.length <= length * 2) return address;
-    const start = address.slice(0, length);
-    const end = address.slice(-length);
-    return `${start}...${end}`;
-  };
-  useEffect(() => {
-    setShortAdd(shortenAddress(address));
-  }, [address]);
+  // const shortenAddress = (address: string, length: number = 5): string => {
+  //   if (address.length <= length * 2) return address;
+  //   const start = address.slice(0, length);
+  //   const end = address.slice(-length);
+  //   return `${start}...${end}`;
+  // };
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(address);
+      await navigator.clipboard.writeText(currentAddress?.genRoochAddress().toStr() || "");
     } catch (error) {
       console.error("copy:", error);
     }
   };
   const toggleVisibility = () => {
-    // setIsBalanceVisible(!isBalanceVisible);
-    (document.getElementById("my_modal_3") as HTMLDialogElement)?.showModal();
+    setIsBalanceVisible(!isBalanceVisible);
+    // (document.getElementById("my_modal_3") as HTMLDialogElement)?.showModal();
   };
 
   const handleNavigation = (path: string, index: number) => {
@@ -106,15 +115,24 @@ const Sidebar: React.FC = () => {
       </div>
 
       <div className="mx-5 my-5 flex items-center">
-        <div className={`inline-flex items-center`}>
+        <div className="relative inline-flex items-center">
+          {/* 用户头像 */}
           <img className="mr-2 h-14 w-14" src={userAvatar} alt="userAvatar" />
+          {/* 叠加图标 */}
+          <div className="absolute bottom-0 right-0 flex items-center justify-center h-5 w-5 bg-electric-green border-none rounded-full ">
+            {isMultisig ? (
+              <span className="text-[8px] font-bold text-black">{multisigInfo}</span>
+            ) : (
+              <img className="h-5 w-5" src={btcIcon} alt="BTC" />
+            )}
+          </div>
         </div>
         <div>
           <p className="text-sm text-white">
             <span className="font-bold">{walletName}</span>
           </p>
           <p className="mb-1 text-xs text-white/50">
-            <span className="font-normal">btc: {shortAdd}</span>
+            <span className="font-normal">{shortenedAddress}</span>
           </p>
           <img className="h-3" src={warnSetting} alt="warnSetting" />
         </div>
@@ -172,7 +190,7 @@ const Sidebar: React.FC = () => {
       </div>
 
       <div className="my-4 flex h-10 w-full items-center justify-center px-5">
-        <button className="btn btn-sm h-full w-full items-center justify-center rounded-full bg-electric-green text-black">
+        <button className="btn btn-sm h-full w-full items-center justify-center rounded-full bg-electric-green text-black hover:bg-green-500">
           <span className="text-sm font-medium">Remove from watchlist</span>
         </button>
       </div>
@@ -180,7 +198,7 @@ const Sidebar: React.FC = () => {
       <ul className="menu-compact menu p-0">
         <li>
           <button
-            className={`rounded-none px-8 ${currentRoute == "/user/home" ? "bg-[#161717]" : ""} `}
+            className={`rounded-none px-8 hover:bg-[#161717] `}
             onClick={() => handleNavigation("/user/home", 0)}
           >
             <div className={`inline-flex items-center`}>
@@ -191,7 +209,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 ${currentRoute == "/user/assets" ? "bg-[#161717]" : ""} `}
+            className={`rounded-none px-8 hover:bg-[#161717]`}
             onClick={() => handleNavigation("/user/assets", 1)}
           >
             <div className={`inline-flex items-center`}>
@@ -202,7 +220,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] ${currentPageIndex == 2 ? "bg-[#161717]" : ""}`}
+            className={`rounded-none px-8 hover:bg-[#161717]`}
             onClick={() => handleNavigation("/user/transaction-section", 2)}
           >
             <div className={`inline-flex items-center`}>
@@ -218,7 +236,7 @@ const Sidebar: React.FC = () => {
         <li>
           <button
             onClick={() => handleNavigation("/user/addressBook", 3)}
-            className={`rounded-none px-8 hover:bg-[#161717] ${currentPageIndex == 3 ? "bg-[#161717]" : ""}`}
+            className={`rounded-none px-8 hover:bg-[#161717] `}
           >
             <div className={`inline-flex items-center`}>
               <img className="mr-2 h-4 w-4" src={addressBookIcon} alt="logo" />
@@ -228,7 +246,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] ${currentPageIndex == 4 ? "bg-[#161717]" : ""}`}
+            className={`rounded-none px-8 hover:bg-[#161717] `}
             onClick={() => handleNavigation("/user/swap", 4)}
           >
             <div className={`inline-flex items-center`}>
@@ -239,7 +257,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] ${currentPageIndex == 5 ? "bg-[#161717]" : ""}`}
+            className={`rounded-none px-8 hover:bg-[#161717] `}
             onClick={() => handleNavigation("/user/app", 5)}
           >
             <div className={`inline-flex items-center`}>
@@ -250,7 +268,7 @@ const Sidebar: React.FC = () => {
         </li>
         <li>
           <button
-            className={`rounded-none px-8 hover:bg-[#161717] ${currentPageIndex == 6 ? "bg-[#161717]" : ""}`}
+            className={`rounded-none px-8 hover:bg-[#161717] `}
             onClick={() => handleNavigation("/user/setting", 6)}
           >
             <div className={`inline-flex items-center`}>
