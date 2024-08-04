@@ -7,10 +7,31 @@ import {
 } from "@roochnetwork/rooch-sdk-kit";
 import { useMemo, useState } from "react";
 import { installWallet } from "../utils";
-import "../style/daisyui-cover.css"; // 导入自定义的 DaisyUI 覆盖样式
+// import stepStyle from "../style/wallet-daisyui-cover.module.css";
 import okxIcon from "/assets/icons/okx.png";
 import logo from "/assets/icons/logo.svg";
 import completeIcon from "/assets/icons/complete.svg";
+const stepStyle
+  = {
+  step: {
+    height: '10px',
+    width: '10px',
+    border: '2px solid gray',
+    content: '""',
+  },
+  stepPrimary: {
+    borderColor: '#12ff80',
+  },
+  stepBefore: {
+    width: '70%',
+    height: '0.1rem',
+    backgroundColor: 'gray',
+    transform: 'translateY(-50%)',
+  },
+  stepPrimaryBefore: {
+    backgroundColor: '#12ff80',
+  },
+};
 
 interface Props {
   className?: string; // 允许className为可选参数
@@ -138,7 +159,7 @@ function ConnectWallet({ className }: Props) {
               </div>
               {/* 步骤条 */}
               <div className="-mx-6 justify-center">
-                <ul className="steps w-full">
+                <ul className={{ stepStyle } } >
                   {/* <li className="step step-primary"></li>
                   <li className="step step-primary"></li>
                   <li className="step"></li> */}

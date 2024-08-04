@@ -1,0 +1,20 @@
+.steps .step:after {
+  height: 10px !important;
+  width: 10px !important;
+  content: "" !important;
+  border: 2px solid gray; /* 默认灰色边框 */
+}
+.steps .step-primary:after {
+  border-color: #12ff80; /* 激活时边框为荧光绿 */
+}
+
+.steps .step:before {
+  width: 70% !important;
+  height: 0.1rem !important;
+  background-color: gray !important; /* 默认线条颜色 */
+  transform: translateY(-50%);
+}
+
+.steps .step-primary + .step-primary:before {
+  background-color: #12ff80 !important;
+}

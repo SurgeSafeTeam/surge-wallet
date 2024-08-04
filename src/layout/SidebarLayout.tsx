@@ -290,8 +290,7 @@ const Sidebar: React.FC = () => {
                   <span className="text-base text-white">Watchlist (1)</span>
                 </div>
 
-                <div
-                >
+                <div>
                   <button>
                     <span className="text-xl text-electric-green">+ Add</span>
                   </button>
@@ -300,16 +299,17 @@ const Sidebar: React.FC = () => {
             </div>
             <div className="flex flex-col items-center py-8">
               <div>
-                <span className="text-white text-xl">Export or import your Surge data </span>
+                <span className="text-xl text-white">
+                  Export or import your Surge data{" "}
+                </span>
               </div>
-              <div className="flex items-center mt-5 space-x-4">
+              <div className="mt-5 flex items-center space-x-4">
                 <button className="btn btn-sm flex h-10 w-24 items-center justify-center rounded-md border border-electric-green bg-black text-electric-green">
                   Export
                 </button>
                 <button className="btn btn-sm flex h-10 w-24 items-center justify-center rounded-md border border-electric-green bg-black text-electric-green">
                   Import
                 </button>
-
               </div>
             </div>
           </div>
