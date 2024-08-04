@@ -13,7 +13,7 @@ import Home from "./pages/Home";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
 import Account from "./pages/Account/Index";
-import CreateAccount from "./pages/Account/Create";
+import CreateAccount from "./pages/Account/Create/Index";
 
 function App() {
   return (
