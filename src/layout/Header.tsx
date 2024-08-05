@@ -1,11 +1,11 @@
-import { Logo } from "../components/Logo";
-import { Navbar } from "../components/Navbar";
-import { Section } from "../components/Section";
-import SupportGithub from "../components/SupoortGithub";
+
 import noteIcon from "/assets/icons/note.svg";
 import { useNavigate } from "react-router-dom";
 
 import WalletBar from "../components/WalletConnect";
+interface HeaderProps {
+  isHome?: boolean;
+}
 
 const Header = () => {
   const navigate = useNavigate();
