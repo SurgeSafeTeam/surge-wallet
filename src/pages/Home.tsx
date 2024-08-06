@@ -2,7 +2,7 @@ import { Section } from "../components/Section";
 import WalletBar from "../components/WalletConnect";
 import Header from "../layout/Header";
 
-export default function () {
+export default function Home() {
   return (
     <>
       <Header haveSidebar={true} />

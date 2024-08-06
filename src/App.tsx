@@ -1,27 +1,26 @@
 // import "./App.css";
 
-import React, { useContext } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { Logo } from "./components/Logo";
-import { Navbar } from "./components/Navbar";
-import { Section } from "./components/Section";
-import SupportGithub from "./components/SupoortGithub";
-import WalletBar from "./components/WalletConnect";
+
+import { Route, Routes } from "react-router-dom";
 import RouterLogProvider, { RouterLogContext } from "./context/RouterContext";
+// import "./style/daisyui-cover.css"; // 导入自定义的 DaisyUI 覆盖样式
 import Home from "./pages/Home";
-import TransactionSection from "./pages/transactions/TransactionsSection.tsx";
-import Setting from "./pages/TempTXStep";
-import UserHome from "./pages/UserHome";
-import AddressBook from "./pages/AddressBook";
-import AppC from "./pages/App";
-import Assets from "./pages/Assets";
-import Swap from "./pages/Swap";
 import Footer from "./layout/Footer";
 import Header from "./layout/Header";
-import SidebarLayout from "./layout/SidebarLayout";
-import Account from "./pages/Account/Index";
 import CreateAccount from "./pages/Account/Create/Index";
+// import './style/daisyui-cover.css'; // 导入自定义的 DaisyUI 覆盖样式
+import TransactionSection from "./pages/transactions/TransactionsSection.tsx";
+import Setting from './pages/Setting';
+import UserHome from './pages/UserHome';
+import AddressBook from './pages/AddressBook';
+import AppC from './pages/App';
+import Assets from './pages/Assets';
+import Swap from './pages/Swap';
+import SidebarLayout from './layout/SidebarLayout';
+import Test from "./pages/Test/Index";
+import Account from "./pages/Account/Index";
 import SendToken from "./pages/transactions/SendToken.tsx";
+import { useContext } from "react";
 
 function App() {
   const { current } = useContext(RouterLogContext);
@@ -39,12 +38,15 @@ function App() {
             }}
           ></div>
         )}
-
         {/* 内容容器 */}
         <div className="relative z-10 flex h-full flex-col justify-between">
+          {/* <Header/> */}
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/accounts" element={<Account />} />
+              <Route path="/account/create" element={<CreateAccount />} />
+              <Route path="/test" element={<Test />} />
               <Route
                 path="/accounts"
                 element={
@@ -113,7 +115,8 @@ function App() {
                 element={
                   <SidebarLayout>
                     <Header />
-                    <SendToken />
+                    {/* <SendToken /> */}
+                    <Setting />
                   </SidebarLayout>
                 }
               />
@@ -121,7 +124,6 @@ function App() {
               {/* 其他路由 */}
             </Routes>
           </div>
-          <Footer />
         </div>
       </div>
     </RouterLogProvider>

@@ -1,6 +1,12 @@
 import BitcoinIcon from "@/assets/svg/bitcoin.svg?react";
 
-export default function Info({ nextStep }: { nextStep: () => void }) {
+export default function Info({
+  setName,
+  nextStep,
+}: {
+  nextStep: () => void;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
     <div className="mt-[18px] grid w-full grid-cols-3 gap-x-6">
       <div className="col-span-2 rounded-3xl bg-[#0A0A0A] p-6">
@@ -10,16 +16,17 @@ export default function Info({ nextStep }: { nextStep: () => void }) {
         </p>
         <div className="mt-5 grid grid-cols-3 gap-x-2">
           <div className="col-span-2 flex items-center gap-x-16 rounded-2xl bg-[#141516] px-[18px] py-5">
-            <span>Name</span>
+            <span className="text-xs">Name</span>
             <input
               type="text"
-              className="grow border-none bg-transparent outline-none"
               placeholder="Respectable Bitcoin chain surge"
+              onChange={(e) => setName(e.target.value)}
+              className="grow border-none bg-transparent text-xs outline-none placeholder:text-white/50"
             />
           </div>
           <div className="col-span-1 flex items-center justify-center gap-x-2 rounded-2xl bg-[#141516] px-[18px] py-5">
             <BitcoinIcon />
-            <span>Bitcoin</span>
+            <span className="text-white">Bitcoin</span>
           </div>
         </div>
         <p className="mt-5 text-xs">

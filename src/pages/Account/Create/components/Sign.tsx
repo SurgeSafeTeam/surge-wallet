@@ -1,15 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddIcon from "@/assets/svg/add.svg?react";
+import useWalletStore from "@/stores/useWalletStore";
+import { getAddressFromPublickey } from "@/lib/tools";
 import BitcoinIcon from "@/assets/svg/bitcoin.svg?react";
 
 export default function Sign({
   preStep,
   nextStep,
+  publicKeys,
+  setSignerNum,
+  setPublicKeys,
 }: {
+  publicKeys: string[];
   preStep: () => void;
   nextStep: () => void;
+  setSignerNum: React.Dispatch<React.SetStateAction<number>>;
+  setPublicKeys: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
-  const [signerNum, setSignerNum] = useState(1);
+  const { publicKey } = useWalletStore();
+  const [error, setError] = useState("");
+
+  const handleAddInput = () => {
+    setPublicKeys([...publicKeys, ""]);
+  };
+
+  const handleDeletePubKey = (index: number) => {
+    const updatedPubKeys = [...publicKeys];
+    updatedPubKeys.splice(index, 1);
+    setPublicKeys(updatedPubKeys);
+  };
+
+  useEffect(() => {
+    const uniquePubKeys = new Set(publicKeys);
+    if (uniquePubKeys.size !== publicKeys.length) {
+      setError("Duplicate pubkey detected");
+    } else {
+      setError("");
+    }
+  }, [publicKeys]);
+
+  const handleChangePubKey = (index: number, publicKey: string) => {
+    const updatedPubKeys = [...publicKeys];
+    setPublicKeys(updatedPubKeys);
+    updatedPubKeys[index] = publicKey;
+  };
+
   return (
     <div className="mt-[18px] grid w-full grid-cols-3 gap-x-6">
       <div className="col-span-2 rounded-3xl bg-[#0A0A0A] p-6">
@@ -18,21 +53,37 @@ export default function Sign({
           Set the signer wallets of your Surge Account and how many need to
           confirm to execute a valid transaction.
         </p>
-        <div className="mt-5 grid grid-cols-9 gap-x-2">
-          <div className="col-span-4 flex items-center gap-x-10 rounded-2xl bg-[#141516] px-[18px] py-5">
-            <span className="text-xs">Signer Name</span>
-            <input
-              type="text"
-              placeholder="Signer 1"
-              className="grow border-none bg-transparent text-xs outline-none placeholder:text-white/50"
-            />
+        {publicKeys.map((pubKey, index) => (
+          <div className="space-y-2 text-xs" key={index}>
+            <div className="mt-5 flex items-center gap-x-4 rounded-2xl bg-[#141516] px-[18px] py-5">
+              <span className="w-16">PubKey {index + 1}:</span>
+              <input
+                type="text"
+                value={pubKey}
+                placeholder={`Enter public key ${index + 1}`}
+                onChange={(e) => handleChangePubKey(index, e.target.value)}
+                className="grow border-none bg-transparent text-xs outline-none placeholder:text-white/50"
+              />
+              {publicKey !== pubKey && (
+                <button
+                  onClick={() => handleDeletePubKey(index)}
+                  className="text-xs text-red-500"
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+            <div className="mt-5 flex items-center gap-x-4 rounded-2xl px-[18px] py-2">
+              <span className="w-16">Address:</span>
+              <div>{getAddressFromPublickey(pubKey)}</div>
+            </div>
           </div>
-          <div className="col-span-5 flex items-center gap-x-4 rounded-2xl bg-[#141516] px-[18px] py-5">
-            <span className="text-xs">Signer</span>
-            <span className="text-xs text-white/50">0x716...63fe</span>
-          </div>
-        </div>
-        <button className="mt-8 flex items-center gap-x-2 rounded-3xl border border-[#12FF80] px-3 py-2 text-[#12FF80]">
+        ))}
+        {error ? <p className="py-2 text-xs text-red-500">{error}</p> : null}
+        <button
+          onClick={handleAddInput}
+          className="mt-8 flex items-center gap-x-2 rounded-3xl border border-[#12FF80] px-3 py-2 text-[#12FF80]"
+        >
           <AddIcon />
           Add new signer
         </button>
@@ -47,14 +98,13 @@ export default function Sign({
               setSignerNum(Number(e.target.value));
             }}
           >
-            <option selected>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
+            {Array.from({ length: publicKeys.length }, (_, index) => (
+              <option key={index + 1} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
           </select>
-          <span>out of 1 signe(s)</span>
+          <span>out of {publicKeys.length} signer(s)</span>
         </div>
         <div className="mt-6 flex items-center justify-end gap-x-2">
           <button

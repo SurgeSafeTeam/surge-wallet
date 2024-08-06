@@ -1,15 +1,34 @@
-import { useState } from "react";
 import Info from "./components/Info";
 import Sign from "./components/Sign";
-import { useNavigate } from "react-router-dom";
+import Review from "./components/Review";
+import { useEffect, useState } from "react";
+import { useToast } from "@/components/Toast";
 import InfoIcon from "@/assets/svg/info.svg?react";
 import SignIcon from "@/assets/svg/sign.svg?react";
+import useWalletStore from "@/stores/useWalletStore";
 import ReviewIcon from "@/assets/svg/review.svg?react";
 import StepArrowIcon from "@/assets/svg/step-arrow.svg?react";
+import { addAccount } from "@/querys/account";
 
 export default function Create() {
-  const navigate = useNavigate();
+  const toast = useToast();
+  const { publicKey } = useWalletStore();
+
   const [step, setStep] = useState(1);
+  const [name, setName] = useState("");
+  const [signerNum, setSignerNum] = useState(1);
+  const [publicKeys, setPublicKeys] = useState<string[]>([]);
+
+  useEffect(() => {
+    addAccount("2222", ["1", "1", "1"]);
+  }, []);
+
+  useEffect(() => {
+    if (publicKey && !publicKeys.includes(publicKey)) {
+      publicKeys.push(publicKey);
+      setPublicKeys(publicKeys);
+    }
+  }, [publicKey, publicKeys]);
 
   const preStep = () => {
     if (step === 1) {
@@ -20,8 +39,12 @@ export default function Create() {
   };
   const nextStep = () => {
     if (step === 3) {
-      navigate("/accounts");
+      return;
     } else {
+      if (step === 1 && !name) {
+        toast.warn("Please enter a name");
+        return;
+      }
       setStep(step + 1);
     }
   };
@@ -41,7 +64,7 @@ export default function Create() {
         </button>
         <StepArrowIcon />
         <button
-          onClick={() => setStep(2)}
+          onClick={() => (step === 1 ? nextStep() : setStep(2))}
           className={[
             "flex flex-col items-center gap-y-2",
             step === 2 ? "text-electric-green" : "",
@@ -62,9 +85,24 @@ export default function Create() {
           <span className="text-xs">Review</span>
         </button>
       </div>
-      {step === 1 && <Info nextStep={nextStep} />}
-      {step === 2 && <Sign preStep={preStep} nextStep={nextStep} />}
-      {step === 3 && <Sign nextStep={nextStep} />}
+      {step === 1 && <Info nextStep={nextStep} setName={setName} />}
+      {step === 2 && (
+        <Sign
+          preStep={preStep}
+          nextStep={nextStep}
+          publicKeys={publicKeys}
+          setSignerNum={setSignerNum}
+          setPublicKeys={setPublicKeys}
+        />
+      )}
+      {step === 3 && (
+        <Review
+          name={name}
+          preStep={preStep}
+          signerNum={signerNum}
+          publicKeys={publicKeys}
+        />
+      )}
     </div>
   );
 }

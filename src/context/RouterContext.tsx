@@ -24,7 +24,7 @@ const RouterLogProvider = ({ children }: PropsWithChildren) => {
   }, [location]);
 
   useEffect(() => {
-    console.log("route:", route);
+    // console.log("route:", route);
     return () => {};
   }, [route]);
 
