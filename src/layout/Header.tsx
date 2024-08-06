@@ -22,7 +22,10 @@ const Header: React.FC<HeaderProps> = ({ haveSidebar = false }) => {
       <div className="container mx-auto flex max-w-[1200px] items-center justify-between px-4">
         {/* 左边Logo：仅在主页显示 */}
         {haveSidebar && (
-          <div className="flex items-center" onClick={() => navigate("/accounts")}>
+          <div
+            className="flex items-center"
+            onClick={() => navigate("/accounts")}
+          >
             <div className={`inline-flex items-center`}>
               <img
                 className="w-30 mr-2 h-10"

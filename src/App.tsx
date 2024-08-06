@@ -52,8 +52,6 @@ function App() {
                     <Header haveSidebar={true} />
                     <Account />
                   </div>
-
-
                 }
               />
               <Route
@@ -115,7 +113,7 @@ function App() {
                 element={
                   <SidebarLayout>
                     <Header />
-                    <Setting />
+                    <SendToken />
                   </SidebarLayout>
                 }
               />
