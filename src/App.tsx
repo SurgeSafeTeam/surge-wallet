@@ -9,7 +9,7 @@ import SupportGithub from "./components/SupoortGithub";
 import WalletBar from "./components/WalletConnect";
 import RouterLogProvider, { RouterLogContext } from "./context/RouterContext";
 import Home from "./pages/Home";
-import TransactionSection from "./pages/TransactionsSection";
+import TransactionSection from "./pages/transactions/TransactionsSection.tsx";
 import Setting from "./pages/TempTXStep";
 import UserHome from "./pages/UserHome";
 import AddressBook from "./pages/AddressBook";
@@ -21,6 +21,7 @@ import Header from "./layout/Header";
 import SidebarLayout from "./layout/SidebarLayout";
 import Account from "./pages/Account/Index";
 import CreateAccount from "./pages/Account/Create/Index";
+import SendToken from "./pages/transactions/SendToken.tsx";
 
 function App() {
   const { current } = useContext(RouterLogContext);
