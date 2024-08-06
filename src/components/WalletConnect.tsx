@@ -1,3 +1,9 @@
+import { installWallet } from "../utils";
+import okxIcon from "/assets/icons/okx.png";
+import logo from "/assets/icons/logo.svg";
+import useMyWalletStore from "@/stores/useWalletStore";
+import { useMemo, useState, useEffect } from "react";
+import completeIcon from "/assets/icons/complete.svg";
 import {
   UniSatWallet,
   useConnectWallet,
@@ -5,11 +11,6 @@ import {
   useWalletStore,
   useWallets,
 } from "@roochnetwork/rooch-sdk-kit";
-import { useMemo, useState } from "react";
-import { installWallet } from "../utils";
-import okxIcon from "/assets/icons/okx.png";
-import logo from "/assets/icons/logo.svg";
-import completeIcon from "/assets/icons/complete.svg";
 
 interface Props {
   className?: string; // 允许className为可选参数
@@ -82,8 +83,7 @@ function ConnectWallet({ className }: Props) {
       console.error("Connection failed", error);
       setStep(0); // 设置步骤为 0，表示连接失败
     }
-
-  }
+  };
   return (
     <div>
       <button
@@ -160,8 +160,9 @@ function ConnectWallet({ className }: Props) {
               <button
                 key="unisat"
                 onClick={handleConnect}
-                className={`btn h-20 w-56 ${step === 2 ? 'border-[#12ff80]' : 'border-white/5'
-                  } rounded-2xl border hover:bg-[#12ff80] mb-5`}
+                className={`btn h-20 w-56 ${
+                  step === 2 ? "border-[#12ff80]" : "border-white/5"
+                } mb-5 rounded-2xl border hover:bg-[#12ff80]`}
               >
                 {step === 0 && (
                   <div className="flex h-3/4 w-full items-center">
@@ -238,6 +239,16 @@ function ConnectWallet({ className }: Props) {
 
 export default function WalletBar({ className }: Props) {
   const connectionStatus = useWalletStore((state) => state.connectionStatus);
+  const { setPublicKey } = useMyWalletStore();
+  // const { setPublicKey } = useMyWalletStore();
+
+  useEffect(() => {
+    if (connectionStatus === "connected") {
+      window.unisat.getPublicKey().then((publicKey) => {
+        setPublicKey(publicKey);
+      });
+    }
+  }, [connectionStatus]);
 
   return connectionStatus === "connected" ? (
     <WalletConnected className={className} />

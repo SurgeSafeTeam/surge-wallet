@@ -1,12 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
+import ReactDOM from "react-dom/client";
+import { HashRouter } from "react-router-dom";
+import { networkConfig } from "./utils/networks";
+import { ToastProvider } from "@/components/Toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RoochProvider, WalletProvider } from "@roochnetwork/rooch-sdk-kit";
-import { networkConfig } from "./utils/networks";
 
 import "./index.css";
-import { HashRouter } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <RoochProvider networks={networkConfig} defaultNetwork="testnet">
         <WalletProvider chain={"bitcoin"} autoConnect>
           <HashRouter>
-            <App />
+            <ToastProvider>
+              <App />
+            </ToastProvider>
           </HashRouter>
         </WalletProvider>
       </RoochProvider>

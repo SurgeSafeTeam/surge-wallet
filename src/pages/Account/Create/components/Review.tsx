@@ -1,62 +1,93 @@
-import { useState } from "react";
-import AddIcon from "@/assets/svg/add.svg?react";
+import CheckIcon from "@/assets/svg/check.svg?react";
+import { getAddressFromPublickey } from "@/lib/tools";
 import BitcoinIcon from "@/assets/svg/bitcoin.svg?react";
 
 export default function Sign({
+  name,
   preStep,
-  nextStep,
+  signerNum,
+  publicKeys,
 }: {
+  name: string;
+  signerNum: number;
   preStep: () => void;
-  nextStep: () => void;
+  publicKeys: string[];
 }) {
-  const [signerNum, setSignerNum] = useState(1);
   return (
     <div className="mt-[18px] grid w-full grid-cols-3 gap-x-6">
       <div className="col-span-2 rounded-3xl bg-[#0A0A0A] p-6">
-        <h6>Signers and confirmations</h6>
+        <h6>Review</h6>
         <p className="mt-2 text-xs text-white/50">
-          Set the signer wallets of your Surge Account and how many need to
-          confirm to execute a valid transaction.
+          You're about to create a new Surge Account and will have to confirm
+          the transaction with your connected wallet.
         </p>
-        <div className="mt-5 grid grid-cols-9 gap-x-2">
-          <div className="col-span-4 flex items-center gap-x-10 rounded-2xl bg-[#141516] px-[18px] py-5">
-            <span className="text-xs">Signer Name</span>
-            <input
-              type="text"
-              placeholder="Signer 1"
-              className="grow border-none bg-transparent text-xs outline-none placeholder:text-white/50"
-            />
+        <div className="mt-5 space-y-2 text-xs">
+          <div className="flex items-center gap-x-2 rounded-2xl bg-[#141516] px-[18px] py-5">
+            <span className="w-16">Name</span>
+            <div className="grow">{name}</div>
           </div>
-          <div className="col-span-5 flex items-center gap-x-4 rounded-2xl bg-[#141516] px-[18px] py-5">
-            <span className="text-xs">Signer</span>
-            <span className="text-xs text-white/50">0x716...63fe</span>
+          <div className="flex items-center gap-x-2 rounded-2xl bg-[#141516] px-[18px] py-5">
+            <span className="w-16">Threshold</span>
+            <div className="grow">
+              {signerNum} out of {publicKeys.length} signer(s)
+            </div>
+          </div>
+          <div className="flex flex-col items-start gap-y-2 rounded-2xl bg-[#141516] px-[18px] py-5">
+            <span className="w-20">Signers</span>
+            <div className="flex flex-col gap-y-2">
+              {publicKeys.map((publicKey) => (
+                <div className="grow space-y-2 rounded-lg">
+                  <div className="flex items-center">
+                    <div className="w-14">PubKey:</div>
+                    <div className="grow">{publicKey}</div>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-14">Address:</div>
+                    <div className="grow">
+                      {getAddressFromPublickey(publicKey)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-x-2 rounded-2xl bg-[#141516] px-[18px] py-5">
+            <span className="w-20">Multi Address</span>
+            <div className="grow">
+              {signerNum} out of {publicKeys.length} signer(s)
+            </div>
           </div>
         </div>
-        <button className="mt-8 flex items-center gap-x-2 rounded-3xl border border-[#12FF80] px-3 py-2 text-[#12FF80]">
-          <AddIcon />
-          Add new signer
-        </button>
-        <h6 className="mt-14 text-white">Threshold</h6>
-        <p className="mt-2 text-xs text-white/50">
-          Any transaction requires the confirmation of:
-        </p>
-        <div className="mt-7 space-x-4">
-          <select
-            className="select border-white bg-transparent text-white outline-none active:border-none active:shadow-none active:outline-none"
-            onChange={(e) => {
-              setSignerNum(Number(e.target.value));
-            }}
-          >
-            <option selected>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-          </select>
-          <span>out of 1 signe(s)</span>
+        <div className="mt-16">Before you continue</div>
+        <div className="col-span-2 mt-5 flex flex-col gap-y-4">
+          <div className="flex items-center gap-x-2">
+            <CheckIcon />
+            <p className="text-white/50">
+              There will be a one-time network fee to activate your smart
+              account wallet.
+            </p>
+          </div>
+          <div className="flex items-center gap-x-2">
+            <CheckIcon />
+            <p className="text-white/50">
+              If you choose to pay later, the fee will be included with the
+              first transaction you make.
+            </p>
+          </div>
+          <div className="flex items-center gap-x-2">
+            <CheckIcon />
+            <p className="text-white/50">Safe doesn't profit from the fees.</p>
+          </div>
         </div>
-        <div className="mt-6 flex items-center justify-end gap-x-2">
+        {/* <div className="flex items-center gap-x-2">
+          <div></div>
+          <div></div>
+        </div>
+        <p>
+          You will have to confirm a transaction and pay an estimated fee
+          of ≈ 0.00183 ETH with your connected wallet
+        </p> */}
+        <div className="mt-12 flex items-center justify-end gap-x-2">
           <button
             onClick={preStep}
             className="rounded-full border border-white px-8 py-3 text-sm"
@@ -64,10 +95,10 @@ export default function Sign({
             Back
           </button>
           <button
-            onClick={nextStep}
+            onClick={() => {}}
             className="rounded-full border border-[#12FF80] bg-[#12FF80] px-8 py-3 text-sm text-black"
           >
-            Next
+            Create
           </button>
         </div>
       </div>
@@ -82,10 +113,7 @@ export default function Sign({
         </div>
         <div className="grid grid-cols-3 gap-x-4 rounded-2xl bg-[#141516] px-5 py-6">
           <span className="col-span-1">Network</span>
-          <div className="col-span-2 flex items-center gap-x-2">
-            <BitcoinIcon className="h-8 w-8" />
-            <div>Bitcoin</div>
-          </div>
+          <BitcoinIcon className="h-8 w-8" />
         </div>
       </div>
     </div>

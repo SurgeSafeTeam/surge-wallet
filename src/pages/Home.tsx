@@ -1,7 +1,7 @@
 import { Section } from "../components/Section";
 import WalletBar from "../components/WalletConnect";
 
-export default function () {
+export default function Home() {
   return (
     <Section>
       <p className="mb-4 mt-10 text-5xl font-bold text-white">
