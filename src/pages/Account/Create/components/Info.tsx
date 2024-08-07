@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import BitcoinIcon from "@/assets/svg/bitcoin.svg?react";
 
 export default function Info({
@@ -7,6 +8,7 @@ export default function Info({
   nextStep: () => void;
   setName: React.Dispatch<React.SetStateAction<string>>;
 }) {
+  const navigate = useNavigate();
   return (
     <div className="mt-[18px] grid w-full grid-cols-3 gap-x-6">
       <div className="col-span-2 rounded-3xl bg-[#0A0A0A] p-6">
@@ -33,8 +35,11 @@ export default function Info({
           By continuing, you agree to our terms of use and privacy policy.
         </p>
         <div className="mt-6 flex items-center justify-end gap-x-2">
-          <button className="rounded-full border border-white px-8 py-3 text-sm">
-            Cancel
+          <button
+            className="rounded-full border border-white px-8 py-3 text-sm"
+            onClick={() => navigate("/accounts")}
+          >
+            Back
           </button>
           <button
             onClick={nextStep}

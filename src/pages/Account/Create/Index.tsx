@@ -8,7 +8,6 @@ import SignIcon from "@/assets/svg/sign.svg?react";
 import useWalletStore from "@/stores/useWalletStore";
 import ReviewIcon from "@/assets/svg/review.svg?react";
 import StepArrowIcon from "@/assets/svg/step-arrow.svg?react";
-import { addAccount } from "@/querys/account";
 
 export default function Create() {
   const toast = useToast();
@@ -18,10 +17,6 @@ export default function Create() {
   const [name, setName] = useState("");
   const [signerNum, setSignerNum] = useState(1);
   const [publicKeys, setPublicKeys] = useState<string[]>([]);
-
-  useEffect(() => {
-    addAccount("2222", ["1", "1", "1"]);
-  }, []);
 
   useEffect(() => {
     if (publicKey && !publicKeys.includes(publicKey)) {
@@ -90,6 +85,7 @@ export default function Create() {
         <Sign
           preStep={preStep}
           nextStep={nextStep}
+          signerNum={signerNum}
           publicKeys={publicKeys}
           setSignerNum={setSignerNum}
           setPublicKeys={setPublicKeys}

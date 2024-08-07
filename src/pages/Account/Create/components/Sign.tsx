@@ -7,10 +7,12 @@ import BitcoinIcon from "@/assets/svg/bitcoin.svg?react";
 export default function Sign({
   preStep,
   nextStep,
+  signerNum,
   publicKeys,
   setSignerNum,
   setPublicKeys,
 }: {
+  signerNum: number;
   publicKeys: string[];
   preStep: () => void;
   nextStep: () => void;
@@ -18,6 +20,7 @@ export default function Sign({
   setPublicKeys: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   const { publicKey } = useWalletStore();
+
   const [error, setError] = useState("");
 
   const handleAddInput = () => {
@@ -93,6 +96,7 @@ export default function Sign({
         </p>
         <div className="mt-7 space-x-4">
           <select
+            defaultValue={Number(signerNum)}
             className="select border-white bg-transparent text-white outline-none active:border-none active:shadow-none active:outline-none"
             onChange={(e) => {
               setSignerNum(Number(e.target.value));

@@ -1,6 +1,5 @@
 // import "./App.css";
 
-
 import { Route, Routes } from "react-router-dom";
 import RouterLogProvider, { RouterLogContext } from "./context/RouterContext";
 // import "./style/daisyui-cover.css"; // 导入自定义的 DaisyUI 覆盖样式
@@ -10,13 +9,13 @@ import Header from "./layout/Header";
 import CreateAccount from "./pages/Account/Create/Index";
 // import './style/daisyui-cover.css'; // 导入自定义的 DaisyUI 覆盖样式
 import TransactionSection from "./pages/transactions/TransactionsSection.tsx";
-import Setting from './pages/Setting';
-import UserHome from './pages/UserHome';
-import AddressBook from './pages/AddressBook';
-import AppC from './pages/App';
-import Assets from './pages/Assets';
-import Swap from './pages/Swap';
-import SidebarLayout from './layout/SidebarLayout';
+import Setting from "./pages/Setting";
+import UserHome from "./pages/UserHome";
+import AddressBook from "./pages/AddressBook";
+import AppC from "./pages/App";
+import Assets from "./pages/Assets";
+import Swap from "./pages/Swap";
+import SidebarLayout from "./layout/SidebarLayout";
 import Test from "./pages/Test/Index";
 import Account from "./pages/Account/Index";
 import SendToken from "./pages/transactions/SendToken.tsx";
@@ -44,15 +43,22 @@ function App() {
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/accounts" element={<Account />} />
-              <Route path="/account/create" element={<CreateAccount />} />
               <Route path="/test" element={<Test />} />
               <Route
                 path="/accounts"
                 element={
                   <div>
-                    <Header haveSidebar={true} />
+                    <Header />
                     <Account />
+                  </div>
+                }
+              />
+              <Route
+                path="/account/create"
+                element={
+                  <div>
+                    <Header />
+                    <CreateAccount />
                   </div>
                 }
               />
@@ -115,12 +121,10 @@ function App() {
                 element={
                   <SidebarLayout>
                     <Header />
-                    {/* <SendToken /> */}
                     <Setting />
                   </SidebarLayout>
                 }
               />
-              <Route path="/account/create" element={<CreateAccount />} />
               {/* 其他路由 */}
             </Routes>
           </div>
