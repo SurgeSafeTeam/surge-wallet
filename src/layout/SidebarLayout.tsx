@@ -234,7 +234,7 @@ const Sidebar: React.FC = () => {
                 alt="logo"
               />
             </div>
-            TransactionSection
+            Transaction
           </button>
         </li>
         <li>
@@ -245,7 +245,7 @@ const Sidebar: React.FC = () => {
             <div className={`inline-flex items-center`}>
               <img className="mr-2 h-4 w-4" src={addressBookIcon} alt="logo" />
             </div>
-            AddressBook
+            Address Book
           </button>
         </li>
         <li>
@@ -256,7 +256,7 @@ const Sidebar: React.FC = () => {
             <div className={`inline-flex items-center`}>
               <img className="mr-2 h-4 w-4" src={swapIcon} alt="logo" />
             </div>{" "}
-            swap
+            Swap
           </button>
         </li>
         <li>
@@ -267,7 +267,7 @@ const Sidebar: React.FC = () => {
             <div className={`inline-flex items-center`}>
               <img className="mr-2 h-4 w-4" src={appIcon} alt="logo" />
             </div>
-            app
+            App
           </button>
         </li>
         <li>
@@ -278,7 +278,7 @@ const Sidebar: React.FC = () => {
             <div className={`inline-flex items-center`}>
               <img className="mr-2 h-4 w-4" src={settingIcon} alt="logo" />
             </div>{" "}
-            setting
+            Settings
           </button>
         </li>
       </ul>
