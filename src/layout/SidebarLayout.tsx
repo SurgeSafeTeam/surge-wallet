@@ -195,7 +195,12 @@ const Sidebar: React.FC = () => {
 
       <div className="my-4 flex h-10 w-full items-center justify-center px-5">
         <button className="btn btn-sm h-full w-full items-center justify-center rounded-full bg-electric-green text-black hover:bg-green-500">
-          <span className="text-sm font-medium">Remove from watchlist</span>
+          <span
+            className="text-sm font-medium"
+            onClick={() => navigate("/user/transaction-section")}
+          >
+            New Transaction
+          </span>
         </button>
       </div>
       {/* TODO: 解决没办法设置当前选中的page的按钮为灰色*/}
