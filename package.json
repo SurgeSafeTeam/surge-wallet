@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.1.1",
+    "@metalet/utxo-wallet-sdk": "^0.5.22",
     "@roochnetwork/rooch-sdk": "^0.2.1",
     "@roochnetwork/rooch-sdk-kit": "^0.2.1",
     "@tanstack/react-query": "5.0.0",
