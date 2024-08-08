@@ -5,11 +5,13 @@ import AddIcon from "@/assets/svg/add.svg?react";
 import { getAccountList } from "@/querys/account";
 import useWalletStore from "@/stores/useWalletStore";
 import BitcoinIcon from "@/assets/svg/bitcoin.svg?react";
+import useMultiWalletStore from "@/stores/useMultiWalletStore";
 
 export default function Account() {
   const navigate = useNavigate();
   const { publicKey } = useWalletStore();
   const [accounts, setAccounts] = useState([]);
+  const { setAddress, setPublicKeys, setNum } = useMultiWalletStore();
 
   useEffect(() => {
     if (publicKey) {
@@ -32,10 +34,16 @@ export default function Account() {
       </div>
       <div className="mt-10 w-full space-y-2 rounded-2xl bg-[#121314] px-2 py-6">
         <h6 className="px-6">My Accounts({accounts.length})</h6>
-        {accounts.map((account: any) => (
+        {accounts.map((account: any,index:number) => (
           <div
+          key={index}
             className="flex w-full cursor-pointer items-center justify-between rounded-3xl px-6 hover:bg-black/50"
-            onClick={() => navigate("/user/home")}
+            onClick={() => {
+              setNum(account.num);
+              setAddress(account.md);
+              setPublicKeys(account.pubs);
+              navigate("/user/home");
+            }}
           >
             <div className="flex items-center gap-4 py-6">
               <div className="size-12 rounded-full bg-white"></div>

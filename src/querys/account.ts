@@ -11,9 +11,11 @@ export const addAccount = async (
   multiAddress: string,
   name: string,
   pubkeys: Array<string>,
+  num: number,
 ) => {
   const query = Bomb.Query("accounts");
   query.set("md", multiAddress);
+  query.set("num", num as any);
   query.set("name", name);
   query.add("pubs", pubkeys);
   query

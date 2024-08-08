@@ -23,6 +23,7 @@ export default function Review({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [multiAddress, setMultiAddress] = useState("");
+  const [multiPubkey, setMultiPubkey] = useState("");
   useEffect(() => {
     if (publicKeys.length < 2) {
       setError("Please add at least 2 public keys");
@@ -32,6 +33,8 @@ export default function Review({
         signerNum,
       );
       setMultiAddress(wallet.address);
+      setMultiPubkey(wallet.publicKey);
+      console.log("publicKey", wallet.publicKey);
     }
   }, [publicKeys, signerNum]);
   return (
@@ -122,7 +125,7 @@ export default function Review({
                 const count = await findAccount(multiAddress);
                 setLoading(true);
                 if (count === 0) {
-                  await addAccount(multiAddress, name, publicKeys);
+                  await addAccount(multiAddress, name, publicKeys, signerNum);
                   setLoading(false);
                   toast.success("Create Multisig address successfully!");
                   const timeId = setTimeout(() => {

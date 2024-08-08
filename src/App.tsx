@@ -9,6 +9,8 @@ import Header from "./layout/Header";
 import CreateAccount from "./pages/Account/Create/Index";
 // import './style/daisyui-cover.css'; // 导入自定义的 DaisyUI 覆盖样式
 import TransactionSection from "./pages/transactions/TransactionsSection.tsx";
+import Transactions from "./pages/transactions/Index.tsx";
+import TransactionDetail from "./pages/transactions/Detail.tsx";
 import Setting from "./pages/Setting";
 import UserHome from "./pages/UserHome";
 import AddressBook from "./pages/AddressBook";
@@ -40,7 +42,7 @@ function App() {
         {/* 内容容器 */}
         <div className="relative z-10 flex h-full flex-col justify-between">
           {/* <Header/> */}
-          <div className="flex-1">
+          <div className="flex-1 overflow-y-scroll">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/test" element={<Test />} />
@@ -67,7 +69,16 @@ function App() {
                 element={
                   <SidebarLayout>
                     <Header />
-                    <UserHome />
+                    <Transactions />
+                  </SidebarLayout>
+                }
+              />
+              <Route
+                path="/user/tx/detail"
+                element={
+                  <SidebarLayout>
+                    <Header />
+                    <TransactionDetail />
                   </SidebarLayout>
                 }
               />
@@ -86,6 +97,15 @@ function App() {
                   <SidebarLayout>
                     <Header />
                     <TransactionSection />
+                  </SidebarLayout>
+                }
+              />
+              <Route
+                path="/user/transaction/send"
+                element={
+                  <SidebarLayout>
+                    <Header />
+                    <SendToken />
                   </SidebarLayout>
                 }
               />
