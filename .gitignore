@@ -51,3 +51,6 @@ Cargo.lock
 
 
 /contracts/build
+
+
+.idea/**
