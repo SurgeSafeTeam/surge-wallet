@@ -22,6 +22,9 @@ const config = {
       "6xl": "4rem",
     },
     extend: {
+      screens: {
+        xs: "30rem",
+      },
       fontFamily: {
         sans: ["HarmonyOS Sans", "sans-serif"],
       },
@@ -68,18 +71,7 @@ const config = {
           "custom-bg": "url('/assets/image/bgimage.svg')",
         },
         light: {
-          // eslint-disable-next-line global-require
-          ...require("daisyui/src/theming/themes").light,
-          ".btn-wallet": {
-            "background-color": "#61398F",
-            "border-color": "#61398F",
-            color: "#fff",
-          },
-          ".btn-wallet:hover": {
-            "background-color": "#61398F",
-            "border-color": "#61398F",
-            color: "#fff",
-          },
+
         },
       },
     ],

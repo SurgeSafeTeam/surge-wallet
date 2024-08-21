@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply w-screen h-screen overflow-x-hidden overflow-y-auto bg-black bg-[url('/assets/images/bgImage.png')] bg-no-repeat bg-cover bg-right;
+}

@@ -1,7 +1,13 @@
 import { useState } from "react";
 import Vline from "@/assets/svg/vline.svg?react";
 import useMultiWalletStore from "@/stores/useMultiWalletStore";
-import { TaprootMultisigWallet, Psbt, networks } from "@metalet/utxo-wallet-sdk";
+import {
+  TaprootMultisigWallet,
+  Psbt,
+  networks,
+  BtcHotWallet,
+  AddressType,
+} from "@metalet/utxo-wallet-sdk";
 import { truncateStr } from "@/lib/format";
 import { unisatApi } from "@/utils/request";
 import { UTXO } from "@/types/utxo";
@@ -19,11 +25,15 @@ export default function SendToken() {
   const { address: multiAddress, publicKeys, num } = useMultiWalletStore();
 
   const createTx = async () => {
-    const psbt = new Psbt({ network: networks.testnet })
+    const psbt = new Psbt({ network: networks.testnet });
     const wallet = new TaprootMultisigWallet(
       publicKeys.map((pubkey) => Buffer.from(pubkey, "hex").subarray(1)),
       num,
     );
+
+    console.log("publicKey", wallet.publicKey);
+
+    // console.log("hotWallet address", hotWallet.getAddress());
 
     const utxos = await unisatApi<UTXO[]>("/address/btc-utxo", "testnet").get({
       address: multiAddress,
@@ -31,23 +41,29 @@ export default function SendToken() {
 
     console.log("utxos", utxos);
 
-
     for (let i = 0; i < utxos.length; i++) {
-      wallet.addInput(
-        psbt,
-        utxos[i].txid,
-        utxos[i].vout,
-        utxos[i].satoshis,
-      )
+      wallet.addInput(psbt, utxos[i].txid, utxos[i].vout, utxos[i].satoshis);
     }
     psbt.addOutput({
-      value: 9000,
+      value:
+        utxos.reduce((total, cur) => total + Number(cur.satoshis), 0) - 1000,
       address: address,
-    })
+    });
 
     // @ts-ignore
-    const [walletAddress] = await window.unisat.getAccounts()
+    const [walletAddress] = await window.unisat.getAccounts();
+    console.log("walletAddress", walletAddress);
 
+    console.log(
+      "options",
+      psbt.data.inputs.map((_, index) => ({
+        index,
+        address: walletAddress,
+        disableTweakSigner: true,
+      })),
+    );
+
+    console.log("psbtHex", psbt.toHex());
 
     // @ts-ignore
     const psbtHex = await window.unisat.signPsbt(psbt.toHex(), {
@@ -55,13 +71,15 @@ export default function SendToken() {
       toSignInputs: psbt.data.inputs.map((_, index) => ({
         index,
         address: walletAddress,
-        disableTweakSigner: true
-      }))
-    })
+        disableTweakSigner: true,
+      })),
+    });
 
-    await addTx(multiAddress, psbtHex, [publicKey])
-    navigate('/user/home')
-  }
+    console.log("psbtHex",psbtHex);
+
+    await addTx(multiAddress, psbtHex, [publicKey]);
+    navigate("/user/home");
+  };
 
   return (
     <div>

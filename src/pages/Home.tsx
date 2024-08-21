@@ -1,17 +1,22 @@
-import { Section } from "../components/Section";
-import WalletBar from "../components/WalletConnect";
-import Header from "../layout/Header";
+import Header from "../layout/Header"
+import { useNavigate } from "react-router-dom"
+import { Section } from "../components/Section"
+import WalletBar from "../components/WalletConnect"
+import { useWalletStore } from "@roochnetwork/rooch-sdk-kit"
 
 export default function Home() {
+  const navigate = useNavigate()
+  const connectionStatus = useWalletStore((state) => state.connectionStatus)
+
   return (
-    <>
+    <div className="w-full overflow-y-auto">
       <Header haveSidebar={true} />
-      <Section>
-        <p className="mb-4 mt-10 text-5xl font-bold text-white">
+      <Section yPadding={"py-4"}>
+        <p className="xs:text-5xl mb-4 mt-10 text-3xl font-bold text-white">
           Unlock A New Way <br />
           of <span className="text-electric-green">Ownership</span>
         </p>
-        <p className="mb-28 text-sm font-normal text-white/60">
+        <p className="xs:mb-28 mb-10 text-sm font-normal text-white/60">
           The most trusted decentralized custody protocol and <br />
           collective asset management platform.
         </p>
@@ -24,9 +29,18 @@ export default function Home() {
           <button className="rounded-full border border-white bg-black px-4 py-2 text-white">
             Watch any account
           </button>
-          <WalletBar className="rounded-full" />
+          {connectionStatus === "connected" ? (
+            <button
+              className="rounded-full border border-white bg-black px-4 py-2 text-white"
+              onClick={() => navigate("/accounts")}
+            >
+              Home
+            </button>
+          ) : (
+            <WalletBar className="rounded-full" />
+          )}
         </div>
       </Section>
-    </>
-  );
+    </div>
+  )
 }

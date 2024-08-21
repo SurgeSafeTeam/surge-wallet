@@ -1,10 +1,11 @@
-import noteIcon from "/assets/icons/note.svg";
-import { useNavigate } from "react-router-dom";
-
-import WalletBar from "../components/WalletConnect";
-import noNotificationIcon from "/assets/icons/copy.svg";
+import noteIcon from "/assets/icons/note.svg"
+import { useNavigate } from "react-router-dom"
+import Logo from "@/assets/svg/Logo.svg?react"
+import LogoWithText from "@/assets/svg/LogoWithText.svg?react"
+import WalletBar from "../components/WalletConnect"
+import noNotificationIcon from "/assets/icons/copy.svg"
 interface HeaderProps {
-  haveSidebar?: boolean;
+  haveSidebar?: boolean
 }
 
 const Header: React.FC<HeaderProps> = ({ haveSidebar = false }) => {
@@ -15,31 +16,24 @@ const Header: React.FC<HeaderProps> = ({ haveSidebar = false }) => {
     "Notification 4",
     "Notification 5",
     "Notification 6",
-  ];
-  const navigate = useNavigate();
+  ]
+  const navigate = useNavigate()
   return (
-    <header className="w-full bg-transparent py-4 text-white">
+    <header className="xs:py-4 w-screen bg-transparent py-2 text-white">
       <div className="container mx-auto flex max-w-[1200px] items-center justify-between px-4">
-        {/* 左边Logo：仅在主页显示 */}
-        {haveSidebar && (
+        {
           <div
             className="flex items-center"
             onClick={() => navigate("/accounts")}
           >
-            <div className={`inline-flex items-center`}>
-              <img
-                className="w-30 mr-2 h-10"
-                src={`/assets/images/logo&text.svg`}
-                alt="logo"
-              />
-            </div>
+            <Logo className="size-8 sm:hidden" />
+            <LogoWithText className="hidden w-48 sm:inline-block" />
           </div>
-        )}
-        {/* 右边按钮 */}
+        }
         <div
-          className={`flex items-center space-x-4 ${haveSidebar ? "" : "ml-auto"}`}
+          className={`flex items-center space-x-2 ${haveSidebar ? "" : "ml-auto"}`}
         >
-          <details className="dropdown dropdown-left dropdown-bottom text-white">
+          <details className="dropdown dropdown-left dropdown-bottom hidden text-white">
             <summary className="btn m-1 flex items-center space-x-2 border-none">
               <div className="relative inline-flex items-center">
                 <img className="h-5 w-5" src={noteIcon} alt="Notifications" />
@@ -85,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ haveSidebar = false }) => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

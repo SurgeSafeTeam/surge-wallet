@@ -1,68 +1,49 @@
-import { installWallet } from "../utils";
-import okxIcon from "/assets/icons/okx.png";
-import logo from "/assets/icons/logo.svg";
-import useMyWalletStore from "@/stores/useWalletStore";
-import { useMemo, useState, useEffect } from "react";
-import completeIcon from "/assets/icons/complete.svg";
+import { installWallet } from "../utils"
+import logo from "/assets/icons/logo.svg"
+import Logo from "@/assets/svg/Logo.svg?react"
+import LogoWithText from "@/assets/svg/LogoWithText.svg?react"
+import useMyWalletStore from "@/stores/useWalletStore"
+import { useMemo, useState, useEffect } from "react"
+import completeIcon from "/assets/icons/complete.svg"
 import {
   UniSatWallet,
   useConnectWallet,
   useCurrentAddress,
   useWalletStore,
   useWallets,
-} from "@roochnetwork/rooch-sdk-kit";
+} from "@roochnetwork/rooch-sdk-kit"
 // import stepStyle from "../style/wallet-daisyui-cover.module.css";
-const stepStyle = {
-  step: {
-    height: "10px",
-    width: "10px",
-    border: "2px solid gray",
-    content: '""',
-  },
-  stepPrimary: {
-    borderColor: "#12ff80",
-  },
-  stepBefore: {
-    width: "70%",
-    height: "0.1rem",
-    backgroundColor: "gray",
-    transform: "translateY(-50%)",
-  },
-  stepPrimaryBefore: {
-    backgroundColor: "#12ff80",
-  },
-};
 
 interface Props {
-  className?: string; // 允许className为可选参数
+  className?: string // 允许className为可选参数
 }
 
 function WalletConnected({ className }: Props) {
-  const currentAddress = useCurrentAddress();
+  const currentAddress = useCurrentAddress()
   const setWalletDisconnected = useWalletStore(
     (state) => state.setWalletDisconnected,
-  );
+  )
 
   const shortenedAddress = useMemo(() => {
-    const address = currentAddress?.genRoochAddress().toStr();
+    const address = currentAddress?.toStr()
 
-    if (!address) return "";
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  }, [currentAddress]);
+    if (!address) return ""
+    return `${address.slice(0, 6)}...${address.slice(-4)}`
+  }, [currentAddress])
 
   return (
     <div className="text-sm font-medium text-white">
-      <div className="dropdown">
+      <div className="dropdown dropdown-end">
         <div
           tabIndex={0}
           role="button"
-          className={`btn-wallet btn ${className}`}
+          className={`border border-white px-2 py-1.5 ${className}`}
         >
           {shortenedAddress}
         </div>
         <ul
           tabIndex={0}
-          className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
+          className="menu dropdown-content dropdown-right z-[1] rounded-box bg-base-100 p-1 shadow"
         >
           <li>
             <a>
@@ -78,73 +59,65 @@ function WalletConnected({ className }: Props) {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
 function ConnectWallet({ className }: Props) {
-  const wallets = useWallets();
-  const { mutateAsync: connectWallet } = useConnectWallet();
-  const [step, setStep] = useState(0);
-  const nextStep = () => setStep((prev) => prev + 1);
-  const handleConnect = async (e) => {
-    setStep(1); // 设置步骤为 1，表示正在连接
+  const wallets = useWallets()
+  const { mutateAsync: connectWallet } = useConnectWallet()
+  const [step, setStep] = useState(0)
+  const handleConnect = async (e: any) => {
+    setStep(1) // 设置步骤为 1，表示正在连接
     try {
-      const unisate = new UniSatWallet()?.getTarget() || null;
+      const unisate = new UniSatWallet()?.getTarget() || null
       if (!unisate?._initialized) {
-        await installWallet("unisat", e); // 等待安装钱包完成
+        await installWallet("unisat", e) // 等待安装钱包完成
       }
-      await connectWallet({ wallet: wallets[0] }); // 等待钱包连接
-      setStep(2); // 设置步骤为 2，表示连接完成
+      await connectWallet({ wallet: wallets[0] }) // 等待钱包连接
+      setStep(2) // 设置步骤为 2，表示连接完成
       // 停留1秒后关闭弹窗
       setTimeout(() => {
-        (document.getElementById("my_modal_3") as HTMLDialogElement)?.close();
-        setStep(0); // 重置步骤
-      }, 1000);
+        (document.getElementById("my_modal_3") as HTMLDialogElement)?.close()
+        setStep(0) // 重置步骤
+      }, 1000)
     } catch (error) {
-      console.error("Connection failed", error);
-      setStep(0); // 设置步骤为 0，表示连接失败
+      console.error("Connection failed", error)
+      setStep(0) // 设置步骤为 0，表示连接失败
     }
-  };
+  }
   return (
     <div>
       <button
-        className={`btn-wallet btn bg-electric-green text-sm font-medium text-black hover:border-green-700 hover:bg-green-600 ${className}`}
+        className={`bg-electric-green px-5 py-1.5 text-sm font-medium text-black hover:border-green-700 hover:bg-green-600 ${className}`}
         onClick={() =>
           (
             document.getElementById("my_modal_3") as HTMLDialogElement
           )?.showModal()
         }
       >
-        Connect Wallet
+        Connect
       </button>
       <dialog id="my_modal_3" className="modal">
-        <div className="modal-box h-[311px] w-[533] bg-[#0D0D0D] p-0">
-          {/* if there is a button in form, it will close the modal */}
+        <div className="modal-box flex h-[311px] w-[533] flex-col items-end overflow-hidden bg-[#0D0D0D] p-0">
           <form method="dialog">
-            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
-              ✕
-            </button>
+            <button className="absolute right-4 top-2">✕</button>
           </form>
-          <div className="flex h-full">
-            {/* 左边的说明和进度条 */}
-            <div className="h-full w-[45%] bg-[#101111] p-6">
+          <div className="xs:flex-row flex h-full w-full flex-col py-6">
+            <div className="xs:w-[40%] xs:flex-col xs:justify-start flex w-full shrink-0 flex-row gap-x-2 bg-[#101111] px-6">
               <div className="flex items-center pb-5">
                 <div className={`inline-flex items-center`}>
-                  <img
-                    className="mr-2 h-10 w-28"
-                    src={`/assets/images/logo&text.svg`}
-                    alt="logo"
-                  ></img>
+                  <Logo className="xs:hidden size-6" />
+                  <LogoWithText className="xs:inline-block xs:w-full hidden w-32" />
                 </div>
               </div>
-              <div className="flex-grow">
+              <div className="xs:flex-grow">
                 {step === 0 && (
-                  <div className="mb-7">
-                    <p className="mb-2 text-lg">Connect your wallet</p>
-                    <div className="space-x-4 text-sm text-white/50">
+                  <div className="xs:mb-7">
+                    <h4 className="mb-2 text-lg">Connect</h4>
+                    <p className="xs:text-sm xs:block hidden space-x-4 text-pretty text-xs text-white/50">
                       Connecting your wallet is like “logging in” to Web3.
                       Select your wallet from the options to get started.
-                    </div>
+                    </p>
                   </div>
                 )}
                 {(step === 1 || step === 2) && (
@@ -176,12 +149,12 @@ function ConnectWallet({ className }: Props) {
               </div>
             </div>
             {/* 右侧按钮 */}
-            <div className="join join-vertical mx-auto mt-7 flex py-2">
+            <div className="join join-vertical mx-auto flex w-full grow px-6">
               <p className="mb-6 text-base"> Available wallets</p>
               <button
                 key="unisat"
                 onClick={handleConnect}
-                className={`btn h-20 w-56 ${
+                className={`btn h-20 w-full ${
                   step === 2 ? "border-[#12ff80]" : "border-white/5"
                 } mb-5 rounded-2xl border hover:bg-[#12ff80]`}
               >
@@ -255,26 +228,24 @@ function ConnectWallet({ className }: Props) {
         {/* <div className="modal-backdrop backdrop-blur-sm bg-black/50"></div> */}
       </dialog>
     </div>
-  );
+  )
 }
 
 export default function WalletBar({ className }: Props) {
-  const connectionStatus = useWalletStore((state) => state.connectionStatus);
-  const { setPublicKey } = useMyWalletStore();
-  // const { setPublicKey } = useMyWalletStore();
+  const { setPublicKey } = useMyWalletStore()
+  const connectionStatus = useWalletStore((state) => state.connectionStatus)
 
   useEffect(() => {
-    console.log("connectionStatus", connectionStatus);
     if (connectionStatus === "connected") {
       window.unisat.getPublicKey().then((publicKey) => {
-        setPublicKey(publicKey);
-      });
+        setPublicKey(publicKey)
+      })
     }
-  }, [connectionStatus]);
+  }, [connectionStatus, setPublicKey])
 
   return connectionStatus === "connected" ? (
     <WalletConnected className={className} />
   ) : (
     <ConnectWallet className={className} />
-  );
+  )
 }

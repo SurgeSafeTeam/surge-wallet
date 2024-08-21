@@ -11,10 +11,10 @@ export default function Transaction() {
   const { address } = useMultiWalletStore();
 
   useEffect(() => {
-    if(!address){
-      navigate('/accounts')
+    if (!address) {
+      navigate("/accounts");
     }
-  },[address])
+  }, [address]);
 
   function sendToken() {
     navigate("/user/transaction/send");
