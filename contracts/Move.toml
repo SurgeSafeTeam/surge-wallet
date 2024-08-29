@@ -6,13 +6,12 @@ version = "0.0.1"
 MoveStdlib = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/move-stdlib", rev = "main" }
 MoveosStdlib = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/moveos-stdlib", rev = "main" }
 RoochFramework = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/rooch-framework", rev = "main" }
-
-
-[dev-addresses]
-surge = "0x42"
+BitcoinMove = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/bitcoin-move", rev = "main" }
+RoochNursery = { git = "https://github.com/rooch-network/rooch.git", subdir = "frameworks/rooch-nursery", rev = "main" }
 
 [addresses]
-surge = "_"
+surge = "0x6a191bea43af414eecbc11639ec7d0a24df9a3072de3da591d036feb0ffff04f"
 std = "0x1"
 moveos_std = "0x2"
 rooch_framework = "0x3"
+bitcoin_move = "0x4"
